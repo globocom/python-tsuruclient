@@ -1,4 +1,5 @@
 from tsuruclient.base import Manager as Base
+from urllib import urlencode
 
 
 class Manager(Base):
@@ -6,11 +7,11 @@ class Manager(Base):
     Manage App resources.
     """
 
-    def list(self):
+    def list(self, **kwargs):
         """
-        Get a list of all apps.
+        Get a list of apps by query string.
         """
-        return self.request("get", "/apps")
+        return self.request("get", "/apps?{}".format(urlencode(kwargs)))
 
     def get(self, appname):
         """
