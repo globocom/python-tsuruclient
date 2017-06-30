@@ -10,7 +10,11 @@ class Manager(Base):
         """
         Get a list of apps by query string.
         """
-        return self.request("get", "/apps?{}", params=kwargs)
+        def handle(response):
+            if response.status_code == 204:
+                return []
+            return response.json()
+        return self.request("get", "/apps", handle_response=handle, params=kwargs)
 
     def get(self, appname):
         """
